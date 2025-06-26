@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Agrinho_2025</title>
+  <link rel="stylesheet" href="style.css" />
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+
+  <style>
+    .grafico-container {
+      max-width: 500px;
+      margin: 40px auto;
+      padding: 20px;
+      background: #f9f9f9;
+      border-radius: 10px;
+      text-align: center;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    canvas {
+      max-width: 100%;
+    }
+
+    .mapa-container {
+      max-width: 90%;
+      margin: 40px auto;
+      text-align: center;
+      font-family: Arial, sans-serif;
+    }
+
+    #map {
+      height: 400px;
+      width: 100%;
+      border-radius: 12px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Campo e Cidade: Mundos que se conectam</h1>
+    <img 
+    class="imagem1"  
+    src="img/_image (1).webp"
+     alt="Relação entre campo e a cidade">
+    />
+    <nav>
+      <ul>
+        <li><a href="#sobre">Sobre</a></li>
+        <li><a href="#importancia">Importância</a></li>
+        <li><a href="#exemplos">Exemplos</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <section id="sobre">
+      <h2>Sobre a conexão</h2>
+      <p>
+        A relação entre o campo e a cidade é essencial para o desenvolvimento
+        sustentável e para o funcionamento da sociedade. Enquanto o campo é
+        responsável pela produção de alimentos e matérias-primas, a cidade se
+        destaca como o centro de consumo e transformação desses produtos.
+      </p>
+    </section>
+
+    <section id="importancia">
+      <h2>Por que é importante?</h2>
+      <p>
+         O campo fornece alimentos e matérias-primas para as cidades, enquanto as cidades oferecem um mercado consumidor, tecnologias e serviços para as áreas rurais. Também ajudam a promover interações socias e culturais.
+      </p>
+    </section>
+
+    <section id="exemplos">
+      <h2>Exemplos de conexão</h2>
+      <div class="exemplos-container">
+        <div class="exemplo">
+          <h3>Feiras livres</h3>
+          <p>
+            São espaços onde a relação campo-cidade se manifesta de forma
+            concreta, com a venda direta de produtos do campo para a cidade.
+            Além de promover intereção social e cultural.
+          </p>
+        </div>
+        <div class="exemplo">
+          <h3>Tecnologia no campo</h3>
+          <p>
+            A tecnologia no campo consiste no uso, em atividades no meio rural,
+            de softwares, hardwares e aplicativos que ajudam na produção
+            agrícola.
+          </p>
+        </div>
+        <div class="exemplo">
+          <h3>Educação técnica</h3>
+          <p>
+            Instituições urbanas oferecem cursos que capacitam jovens do campo
+            em novas tecnologias e gestão rural.
+          </p>
+        </div>
+        <div class="exemplo">
+          <h3>Transportes e logística</h3>
+          <p>
+            As cidades desenvolvem sistemas logísticos que permitem o escoamento
+            da produção agrícola até os centros de consumo.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="grafico-container">
+      <h2>O que mais consumimos do campo</h2>
+      <canvas id="graficoCampo"></canvas>
+    </section>
+
+    <section class="mapa-container">
+      <h2>Principais Festivais do Paraná</h2>
+      <div id="map"></div>
+    </section>
+  </main>
+
+  <footer>
+    <p>Projeto Agrinho Líris 2025</p>
+  </footer>
+
+  <script>
+    const ctx = document.getElementById("graficoCampo").getContext("2d");
+    new Chart(ctx, {
+      type: "pie",
+      data: {
+        labels: [
+          "Alimentos (frutas, legumes, grãos)",
+          "Laticínios",
+          "Carnes e ovos",
+          "Energia (bioenergia, lenha)",
+          "Matéria-prima (algodão, madeira)",
+          "Outros",
+        ],
+        datasets: [
+          {
+            data: [40, 20, 15, 10, 10, 5],
+            backgroundColor: [
+              "#4CAF50",
+              "#FF9800",
+              "#F44336",
+              "#03A9F4",
+              "#9C27B0",
+              "#607D8B",
+            ],
+            borderWidth: 1,
+          },
+        ],
+      },
+      options: {
+        responsive: true,
+        plugins: {
+          legend: {
+            position: "bottom",
+          },
+          tooltip: {
+            callbacks: {
+              label: function (context) {
+                return `${context.label}: ${context.parsed}%`;
+              },
+            },
+          },
+        },
+      },
+    });
+  </script>
+
+  <script>
+    const map = L.map("map", {
+      minZoom: 7,
+      maxZoom: 10,
+      maxBounds: [
+        [-27.0, -55.0], 
+        [-22.0, -47.5], 
+      ],
+    }).setView([-24.5, -51.5], 7);
+
+    L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+      attribution: "Mapa: © OpenStreetMap",
+    }).addTo(map);
+
+    const festivais = [
+      {
+        nome: "Festa da Laranja",
+        cidade: "Cerro Azul",
+        coordenadas: [-24.8264, -49.2606],
+        info: "Festival que celebra a produção de laranja com shows, desfiles e feira de agricultura familiar.",
+      },
+      {
+        nome: "ExpoLondrina",
+        cidade: "Londrina",
+        coordenadas: [-23.3103, -51.1628],
+        info: "Uma das maiores feiras agropecuárias do Brasil.",
+      },
+      {
+        nome: "Festa da Uva",
+        cidade: "Marialva",
+        coordenadas: [-23.4842, -51.7904],
+        info: "Celebração da colheita com música, desfile e comidas típicas.",
+      },
+      {
+        nome: "Festa Nacional do Milho",
+        cidade: "Maringá",
+        coordenadas: [-23.4241, -51.9331],
+        info: "Evento que celebra o milho com shows, exposições e gastronomia típica.",
+      },
+      {
+        nome: "Festa do Pinhão",
+        cidade: "São José dos Pinhais",
+        coordenadas: [-25.5317, -49.2039],
+        info: "Festival com foco na cultura serrana e culinária com pinhão.",
+      },
+    ];
+
+    festivais.forEach((f) => {
+      L.marker(f.coordenadas)
+        .addTo(map)
+        .bindPopup(
+          `<strong>${f.nome}</strong><br>${f.cidade}<br><em>${f.info}</em>`
+        );
+    });
+  </script>
+</body>
+</html>
